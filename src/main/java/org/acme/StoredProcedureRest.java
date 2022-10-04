@@ -18,8 +18,8 @@ import javax.ws.rs.core.Response;
 import io.agroal.api.AgroalDataSource;
 import oracle.jdbc.OracleTypes;
 
-@Path("/hello")
-public class GreetingResource {
+@Path("/employees")
+public class StoredProcedureRest {
 
     @Inject
     AgroalDataSource dataSource;
