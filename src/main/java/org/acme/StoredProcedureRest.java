@@ -82,7 +82,7 @@ public class StoredProcedureRest {
             connection = dataSource.getConnection();
 
             cstmt = connection.prepareCall("BEGIN SP_APL_DETALLE_SOLICITUD(?,?); END;");
-            cstmt.setString(1, "Test1");
+            cstmt.setString(1, "40839");
             cstmt.registerOutParameter(2, OracleTypes.CURSOR);
             cstmt.execute();
 
