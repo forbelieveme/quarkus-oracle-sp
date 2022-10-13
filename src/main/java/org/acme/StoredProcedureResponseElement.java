@@ -1,6 +1,6 @@
 package org.acme;
 
-public class Employee {
+public class StoredProcedureResponseElement {
 
     private String id;
     private String name;
@@ -8,7 +8,7 @@ public class Employee {
     private String dpto;
     private String location;
 
-    public Employee(String id, String name, String salary, String dpto, String location) {
+    public StoredProcedureResponseElement(String id, String name, String salary, String dpto, String location) {
         this.id = id;
         this.name = name;
         this.salary = salary;

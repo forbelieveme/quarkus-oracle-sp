@@ -12,7 +12,7 @@ public class StoredProcedureRest {
     @POST
     public Response hello(StoredProcedureRequestBody SPRequestBody) {
 
-        List<Employee> response;
+        List<StoredProcedureResponseElement> response;
 
         try {
             StoredProcedureCall spcall = new StoredProcedureCall();

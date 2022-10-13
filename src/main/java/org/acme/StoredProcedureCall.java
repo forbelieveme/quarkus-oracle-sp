@@ -21,9 +21,9 @@ public class StoredProcedureCall {
     ResultSet resultSet = null;
     CallableStatement cstmt = null;
     String sqlString = "BEGIN SP_CONSULTA_GENERALES(?,?,?,?,?,?,?,?); END;";
-    List<Employee> employeesArray = new ArrayList<Employee>();
+    List<StoredProcedureResponseElement> employeesArray = new ArrayList<StoredProcedureResponseElement>();
 
-    public List<Employee> callStoredProcedure(StoredProcedureRequestBody SPRequestBody) throws SQLException {
+    public List<StoredProcedureResponseElement> callStoredProcedure(StoredProcedureRequestBody SPRequestBody) throws SQLException {
 
         connection = oracleDataSource.getConnection();
 
@@ -42,7 +42,7 @@ public class StoredProcedureCall {
 
         while (resultSet.next()) {
 
-            Employee employee = new Employee(resultSet.getString("ID"),
+            StoredProcedureResponseElement employee = new StoredProcedureResponseElement(resultSet.getString("ID"),
                     resultSet.getString("NAME"),
                     resultSet.getString("SALARY"), resultSet.getString("DPTO"),
                     resultSet.getString("LOCATION"));
