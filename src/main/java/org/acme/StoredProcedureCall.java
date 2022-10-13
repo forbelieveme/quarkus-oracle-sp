@@ -20,13 +20,14 @@ public class StoredProcedureCall {
     Connection connection = null;
     ResultSet resultSet = null;
     CallableStatement cstmt = null;
+    String sqlString = "BEGIN SP_CONSULTA_GENERALES(?,?,?,?,?,?,?,?); END;";
     List<Employee> employeesArray = new ArrayList<Employee>();
 
     public List<Employee> callStoredProcedure(StoredProcedureRequestBody SPRequestBody) throws SQLException {
 
         connection = oracleDataSource.getConnection();
 
-        cstmt = connection.prepareCall("BEGIN SP_CONSULTA_GENERALES(?,?,?,?,?,?,?,?); END;");
+        cstmt = connection.prepareCall(sqlString);
         cstmt.setString(1, SPRequestBody.getParameter_1());
         cstmt.setString(2, SPRequestBody.getParameter_2());
         cstmt.setString(3, SPRequestBody.getParameter_3());
