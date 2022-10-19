@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -21,10 +20,7 @@ public class StoredProcedureCall {
     ResultSet resultSet = null;
     CallableStatement cstmt = null;
     String sqlString = "BEGIN SP_CONSULTA_GENERALES(?,?,?,?,?,?,?,?); END;";
-    // List<StoredProcedureResponseElement> employeesArray = new ArrayList<StoredProcedureResponseElement>();
 
-    // public List<StoredProcedureResponseElement>
-    // callStoredProcedure(StoredProcedureRequestBody SPRequestBody,
     public JsonArray callStoredProcedure(StoredProcedureRequestBody SPRequestBody,
             AgroalDataSource oracleDataSource)
             throws SQLException {
@@ -73,16 +69,6 @@ public class StoredProcedureCall {
             });
             result.add(row);
         }
-
-        // while (resultSet.next()) {
-
-        // StoredProcedureResponseElement employee = new
-        // StoredProcedureResponseElement(resultSet.getString("ID"),
-        // resultSet.getString("NAME"),
-        // resultSet.getString("SALARY"), resultSet.getString("DPTO"),
-        // resultSet.getString("LOCATION"));
-        // employeesArray.add(employee);
-        // }
 
         return result;
 

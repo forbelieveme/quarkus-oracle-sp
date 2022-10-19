@@ -1,7 +1,5 @@
 package org.acme;
 
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -21,7 +19,6 @@ public class StoredProcedureRest {
     @POST
     public Response spPost(StoredProcedureRequestBody SPRequestBody) {
 
-        // List<StoredProcedureResponseElement> response;
         JsonArray response;
 
         try {
