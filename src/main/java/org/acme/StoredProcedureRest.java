@@ -18,7 +18,7 @@ public class StoredProcedureRest {
     AgroalDataSource oracleDataSource;
 
     @POST
-    public Response hello(StoredProcedureRequestBody SPRequestBody) {
+    public Response spPost(StoredProcedureRequestBody SPRequestBody) {
 
         List<StoredProcedureResponseElement> response;
 
