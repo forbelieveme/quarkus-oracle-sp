@@ -9,6 +9,7 @@ import javax.ws.rs.core.Response;
 
 import io.agroal.api.AgroalDataSource;
 import io.quarkus.agroal.DataSource;
+import io.vertx.core.json.JsonArray;
 
 @Path("/employees")
 public class StoredProcedureRest {
@@ -20,7 +21,8 @@ public class StoredProcedureRest {
     @POST
     public Response spPost(StoredProcedureRequestBody SPRequestBody) {
 
-        List<StoredProcedureResponseElement> response;
+        // List<StoredProcedureResponseElement> response;
+        JsonArray response;
 
         try {
             StoredProcedureCall spcall = new StoredProcedureCall();
