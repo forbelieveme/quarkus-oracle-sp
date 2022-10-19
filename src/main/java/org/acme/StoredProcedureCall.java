@@ -7,15 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import io.agroal.api.AgroalDataSource;
 import oracle.jdbc.OracleTypes;
 
 public class StoredProcedureCall {
-
-    @Inject
-    AgroalDataSource oracleDataSource;
 
     Connection connection = null;
     ResultSet resultSet = null;
@@ -23,7 +18,9 @@ public class StoredProcedureCall {
     String sqlString = "BEGIN SP_CONSULTA_GENERALES(?,?,?,?,?,?,?,?); END;";
     List<StoredProcedureResponseElement> employeesArray = new ArrayList<StoredProcedureResponseElement>();
 
-    public List<StoredProcedureResponseElement> callStoredProcedure(StoredProcedureRequestBody SPRequestBody) throws SQLException {
+    public List<StoredProcedureResponseElement> callStoredProcedure(StoredProcedureRequestBody SPRequestBody,
+            AgroalDataSource oracleDataSource)
+            throws SQLException {
 
         connection = oracleDataSource.getConnection();
 
