@@ -3,11 +3,16 @@ package org.acme;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import io.agroal.api.AgroalDataSource;
+import io.vertx.core.json.JsonArray;
+import io.vertx.core.json.JsonObject;
 import oracle.jdbc.OracleTypes;
 
 public class StoredProcedureCall {
@@ -16,9 +21,11 @@ public class StoredProcedureCall {
     ResultSet resultSet = null;
     CallableStatement cstmt = null;
     String sqlString = "BEGIN SP_CONSULTA_GENERALES(?,?,?,?,?,?,?,?); END;";
-    List<StoredProcedureResponseElement> employeesArray = new ArrayList<StoredProcedureResponseElement>();
+    // List<StoredProcedureResponseElement> employeesArray = new ArrayList<StoredProcedureResponseElement>();
 
-    public List<StoredProcedureResponseElement> callStoredProcedure(StoredProcedureRequestBody SPRequestBody,
+    // public List<StoredProcedureResponseElement>
+    // callStoredProcedure(StoredProcedureRequestBody SPRequestBody,
+    public JsonArray callStoredProcedure(StoredProcedureRequestBody SPRequestBody,
             AgroalDataSource oracleDataSource)
             throws SQLException {
 
@@ -37,16 +44,47 @@ public class StoredProcedureCall {
 
         resultSet = (ResultSet) cstmt.getObject(8);
 
-        while (resultSet.next()) {
+        ResultSetMetaData md = resultSet.getMetaData();
+        int numCols = md.getColumnCount();
 
-            StoredProcedureResponseElement employee = new StoredProcedureResponseElement(resultSet.getString("ID"),
-                    resultSet.getString("NAME"),
-                    resultSet.getString("SALARY"), resultSet.getString("DPTO"),
-                    resultSet.getString("LOCATION"));
-            employeesArray.add(employee);
+        System.out.println(numCols);
+
+        List<String> colNames = IntStream.range(0, numCols)
+                .mapToObj(i -> {
+                    try {
+                        return md.getColumnName(i + 1);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        return "?";
+                    }
+                })
+                .collect(Collectors.toList());
+
+        JsonArray result = new JsonArray();
+
+        while (resultSet.next()) {
+            JsonObject row = new JsonObject();
+            colNames.forEach(cn -> {
+                try {
+                    row.put(cn, resultSet.getObject(cn));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            result.add(row);
         }
 
-        return employeesArray;
+        // while (resultSet.next()) {
+
+        // StoredProcedureResponseElement employee = new
+        // StoredProcedureResponseElement(resultSet.getString("ID"),
+        // resultSet.getString("NAME"),
+        // resultSet.getString("SALARY"), resultSet.getString("DPTO"),
+        // resultSet.getString("LOCATION"));
+        // employeesArray.add(employee);
+        // }
+
+        return result;
 
     }
 }
